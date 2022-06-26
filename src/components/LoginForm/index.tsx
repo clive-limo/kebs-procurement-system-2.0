@@ -1,11 +1,8 @@
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-} from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from 'firebase_config/firebaseInit';
 import Router from 'next/router';
 import type { FC } from 'react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const LoginForm: FC = () => {
   const [data, setData] = useState({
@@ -13,20 +10,25 @@ const LoginForm: FC = () => {
     password: '',
   });
 
-  onAuthStateChanged(auth, () => {
-    Router.push('/home');
+  useEffect(() => {
+    const user = auth.currentUser;
+    onAuthStateChanged(auth, () => {
+      if (user) {
+        Router.push('/home');
+      }
+    });
   });
 
   const handleLogin = async () => {
-    await createUserWithEmailAndPassword(auth, data.email, data.password);
-    console.log(data.email);
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <form
-      className="flex h-[50vh] flex-col py-3 pl-8 pr-20 lg:h-[40vh]"
-      autoComplete="off"
-    >
+    <div className="flex h-[50vh] flex-col py-3 pl-8 pr-20 lg:h-[40vh]">
       <label className="my-1 text-sm font-light text-dark-primary">EMAIL</label>
       <input
         onChange={(e: any) =>
@@ -65,7 +67,7 @@ const LoginForm: FC = () => {
       >
         LOG IN
       </button>
-    </form>
+    </div>
   );
 };
 
