@@ -22,7 +22,7 @@ const MainLayout: FC<IMainProps> = ({
   const [showMenu, setShow] = useState(true);
   const router = useRouter();
   useEffect(() => {
-    if (router.pathname === '/') {
+    if (router.pathname === '/' || router.pathname === '/create_user') {
       setShow(false);
     }
   });

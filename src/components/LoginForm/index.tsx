@@ -22,6 +22,10 @@ const LoginForm: FC = () => {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
+      if (data.email === 'test2@gmail.com') {
+        localStorage.setItem('email', data.email);
+        localStorage.setItem('password', data.password);
+      }
     } catch (error) {
       console.log(error);
     }
