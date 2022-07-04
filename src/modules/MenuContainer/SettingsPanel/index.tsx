@@ -14,7 +14,7 @@ const SettingsPanel: FC = () => {
     <div>
       <p className="m-5 text-[30px] font-bold text-white">Settings</p>
       <button
-        className="m-3 h-[40px] w-[300px] bg-dark-primary border rounded-2xl p-1 text-white font-semibold"
+        className="m-3 h-[40px] w-[300px] rounded-2xl border bg-dark-primary p-1 font-semibold text-white"
         onClick={handleLogout}
       >
         Logout
